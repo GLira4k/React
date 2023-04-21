@@ -1,3 +1,5 @@
+import './styles.css';
+
 //component com props dinâmicas
 
 export const PostCard = ({ title, cover, body}) => (
