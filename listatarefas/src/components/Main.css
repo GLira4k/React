@@ -1,0 +1,30 @@
+:root{
+  --cor1:#FEFFFF;
+  --cor2:#F2A71B;
+  --cor3:#78866B;
+  --cor4:#F4C264;
+  --cor5:#323B29;
+  --cor6:#C9D4BE;
+}
+
+.main{
+  background-color: var(--cor1);
+  padding: 30px;
+  margin: 50px auto;
+  max-width: 500px;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.262);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main h1{
+  font-size: 25px;
+}
+
+
+
+
+
