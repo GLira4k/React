@@ -4,6 +4,7 @@ import { Posts } from "../../components/Posts";
 import { Component } from "react";
 import { loadPosts } from "../../utils/load-posts";
 import Button from "../../components/Button";
+import TextInput from "../../components/TextInput";
 
 //class component, eles têm um ciclo de vida mais complexo e são usados principalmente para componentes que precisam de um estado interno ou de acesso a métodos do ciclo de vida.
 
@@ -53,23 +54,52 @@ export default class Home extends Component {
     const { posts, page, postsPerPage, allPosts, searchValue } = this.state;
     const noMorePosts = page + postsPerPage >= allPosts.length;
 
+
+    // operação ternária - condição ? "valor 1" : "valor 2"
+    const filteredPosts = !!searchValue ? 
+      posts.filter(posts => {
+          return posts.title.toLowerCase().includes(
+            searchValue.toLowerCase()
+            );
+        }
+      ) : posts;
+
     return (
-      <section className="container">
-        {!!searchValue && (
-          <>
-            <h1>Search Value: {searchValue}</h1>
-          </>
+      <section className="container"> 
+        <div className="search_container">
+          {!!searchValue && (
+            <>
+              <h1>Search Value: {searchValue}</h1>
+            </>
+          )}
+           <TextInput
+           type="search"
+           onChange={this.handleChange}
+           value={searchValue}
+           />
+        </div>
+       
+        {filteredPosts.length > 0 &&(
+          <Posts posts={filteredPosts} />
         )}
 
-        <input type="search" onChange={this.handleChange} value={searchValue} />
-        <Posts posts={posts} />
+        {filteredPosts.length === 0 &&(
+          <p>Não há resultado para: {searchValue}</p>
+        )}
+
         <div className="button_container">
-          <Button
-            text="Load More Posts"
-            /* Passando apenas valor do onClick em props */
-            onClick={this.loadMorePosts}
-            disabled={noMorePosts}
-          />
+
+          {
+          // avaliação de curto circuito
+          !searchValue && (
+            <Button
+              text="Load More Posts"
+              /* Passando apenas valor do onClick em props */
+              onClick={this.loadMorePosts}
+              disabled={noMorePosts}
+            />
+          )
+          }
         </div>
       </section>
     );
